@@ -1,0 +1,25 @@
+{
+  "name": "book-store-backend",
+  "version": "1.0.0",
+  "description": "Simple book store app where you can store books,edit them,update them,delete them",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZTanvir/Book-Store.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongodb",
+    "react"
+  ],
+  "author": "Zahirul Islam",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ZTanvir/Book-Store/issues"
+  },
+  "homepage": "https://github.com/ZTanvir/Book-Store#readme"
+}
