@@ -59,9 +59,23 @@ app.delete("/api/books/:id", (request, response, next) => {
   const id = request.params.id;
   Book.findByIdAndRemove(id)
     .then((successful) => {
-      console.log("Delete book");
       response.status(204).end();
     })
+    .catch((error) => next(error));
+});
+
+// update a single book
+app.put("/api/books/:id", (request, response, next) => {
+  const id = request.params.id;
+  const body = request.body;
+  if (!body.title || !body.author || !body.publishYear) {
+    return response.status(404).json({
+      error: "Title or author or publishYear missing",
+    });
+  }
+
+  Book.findByIdAndUpdate(id, body, { new: true })
+    .then((newBook) => response.json(newBook))
     .catch((error) => next(error));
 });
 
