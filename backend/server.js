@@ -54,6 +54,17 @@ app.get("/api/books/:id", (request, response, next) => {
     .catch((error) => next(error));
 });
 
+// delete a single book
+app.delete("/api/books/:id", (request, response, next) => {
+  const id = request.params.id;
+  Book.findByIdAndRemove(id)
+    .then((successful) => {
+      console.log("Delete book");
+      response.status(204).end();
+    })
+    .catch((error) => next(error));
+});
+
 // handle all the error related to route
 const handleRouteError = (error, request, response, next) => {
   console.log("Error name", error.name);
