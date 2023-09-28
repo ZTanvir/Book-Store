@@ -11,6 +11,21 @@ const app = express();
 // middleware
 app.use(express.json());
 
+// middleware functions
+// handle all the error related to route
+const handleRouteError = (error, request, response, next) => {
+  console.log("Error name", error.name);
+  if (error.name === "CastError") {
+    response.status(400).send({ error: "malformatted id" });
+  }
+
+  next(error);
+};
+// when user request a route that not created
+const unknownRoute = (request, response) => {
+  response.status(404).send({ error: "Unknown route" });
+};
+
 // get all the books
 app.get("/api/books", (request, response) => {
   // get all the books from database
@@ -43,6 +58,7 @@ app.post("/api/books", (request, response, next) => {
 // get a single book
 app.get("/api/books/:id", (request, response, next) => {
   const id = request.params.id;
+
   Book.findById(id)
     .then((book) => {
       if (book) {
@@ -57,6 +73,7 @@ app.get("/api/books/:id", (request, response, next) => {
 // delete a single book
 app.delete("/api/books/:id", (request, response, next) => {
   const id = request.params.id;
+
   Book.findByIdAndRemove(id)
     .then((successful) => {
       response.status(204).end();
@@ -79,17 +96,9 @@ app.put("/api/books/:id", (request, response, next) => {
     .catch((error) => next(error));
 });
 
-// handle all the error related to route
-const handleRouteError = (error, request, response, next) => {
-  console.log("Error name", error.name);
-  if (error.name === "CastError") {
-    response.status(400).send({ error: "malformatted id" });
-  }
-
-  next(error);
-};
-
 app.use(handleRouteError);
+app.use(unknownRoute);
+
 app.listen(PORT || 3001, () => {
   console.log(`Server start on port ${PORT}`);
 });
