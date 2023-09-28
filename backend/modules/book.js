@@ -32,6 +32,13 @@ const bookScheme = mongoose.Schema(
   { timestamps: true }
 );
 // formate document and set to JSON
+bookScheme.set("toJSON", {
+  transform: (doccument, returnObj) => {
+    returnObj.id = returnObj._id;
+    delete returnObj._id;
+    delete returnObj.__v;
+  },
+});
 
 //  export the book model
 module.exports = mongoose.model("Book", bookScheme);
