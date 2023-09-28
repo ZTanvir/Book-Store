@@ -37,6 +37,16 @@ app.post("/api/books", (request, response) => {
   });
 });
 
+// get a single book
+app.get("/api/books/:id", (request, response) => {
+  const id = request.params.id;
+  Book.findById(id).then((book) => {
+    if (book) {
+      response.json(book);
+    }
+  });
+});
+
 app.listen(PORT || 3001, () => {
   console.log(`Server start on port ${PORT}`);
 });
