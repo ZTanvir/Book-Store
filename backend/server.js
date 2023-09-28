@@ -41,9 +41,7 @@ app.post("/api/books", (request, response) => {
 app.get("/api/books/:id", (request, response) => {
   const id = request.params.id;
   Book.findById(id).then((book) => {
-    if (book) {
-      response.json(book);
-    }
+    response.json(book);
   });
 });
 
